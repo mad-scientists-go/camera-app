@@ -74,7 +74,7 @@ class MotionLogin extends React.Component {
       promiseArr.push(
         client.recognize({
           image: pic,
-          gallery_name: "go-gallery-5"
+          gallery_name: "go-gallery-6"
         })
       )
     );

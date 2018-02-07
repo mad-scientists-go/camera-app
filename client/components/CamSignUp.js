@@ -35,7 +35,7 @@ export default class CamSignUp extends React.Component {
     let params = {
       image: this.state.images[0],
       subject_id,
-      gallery_name: "go-gallery-5",
+      gallery_name: "go-gallery-6",
       selector: "SETPOSE"
     };
     client
