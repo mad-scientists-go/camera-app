@@ -99,3 +99,30 @@ Ready to go world wide? Here's a guide to deployment!
 Now, you should be deployed!
 
 Why do all of these steps? The big reason is because we don't want our production server to be cluttered up with dev dependencies like webpack, but at the same time we don't want our development git-tracking to be cluttered with production build files like bundle.js! By doing these steps, we make sure our development and production environments both stay nice and clean!
+
+
+# Raspberry pi
+
+ssh into raspberry 
+
+ngrok http 8080 (install ngrok globally)
+
+sudo node server.js
+
+# Cart or adding products to line items
+
+once there is an incerese in the dist, we want to note the increase in dist and then run fucntion 
+1. check if dist inc is greater than product breadth - done
+2. if it is greate, / by breadth to get the quantitiy of products taken
+3. take 3 pictures and send it to kairos for user recoginition 
+4. post request to lineItem with userId and productId and quantity
+5. post the object to orders api. 
+
+Condition when someone places the product back
+1. check if dist decreases is greater than product breadth
+2. if it is greater, / by breadth to get the quantitiy of products put back
+3. take 3 pictures and send it to kairos for user recoginition 
+4. post request to lineItem with userId and productId and updated quantity
+5. put the object to orders api. // make note .. dont delete
+
+put in logic for deleting product if qty = 0

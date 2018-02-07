@@ -16,7 +16,23 @@ const User = db.define('user', {
   },
   googleId: {
     type: Sequelize.STRING
-  }
+  },
+  subject_id: {
+    type: Sequelize.STRING
+  },
+  card_num: {
+    type: Sequelize.STRING
+  },
+	first: {
+		type: Sequelize.STRING
+	},
+	last: {
+		type: Sequelize.STRING
+	},
+	isAdmin: {
+		type: Sequelize.BOOLEAN,
+		defaultValue: false
+	}
 })
 
 module.exports = User
