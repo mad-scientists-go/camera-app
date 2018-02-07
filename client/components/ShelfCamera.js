@@ -4,10 +4,14 @@ import { connect } from "react-redux"
 import { updateLineItem, updateShelf } from '../store'
 import axios from 'axios'
 import inStoreUsers from '../store/inStoreUsers';
+import io from "socket.io-client";
 if (process.env.NODE_ENV !== 'production') require('../../secrets')
 const Kairos = require("kairos-api");
 const client = new Kairos(process.env.KAIROS_ID, process.env.KAIROS_KEY);
 
+let socket = io("https://smart-mart-server.herokuapp.com");
+// socket = io.origins('*:*')
+// socket.set('origins', "https://smart-mart-server.herokuapp.com")
 class ShelfCamera extends React.Component{
     constructor(props){
         super(props)
@@ -25,7 +29,7 @@ class ShelfCamera extends React.Component{
 
     // get kairos functionality here
     // need to send capture method in store!
-    capture = () => {
+    capture() {
     let pic = this.webcam.getScreenshot();
     this.setState({ images: [pic] });
     setTimeout(() => {
@@ -54,7 +58,14 @@ componentWillReceiveProps (nextProps) {
     this.capture()
   }
 }
-
+componentDidMount() {
+  socket.on("got-data-take-pic", (data) => {
+    console.log("product data", data);
+    console.log('made it to shelf cam from motion sensor event. take pics.')
+    this.setState({ productId: data.id, qty: data.qty });
+    this.capture()
+  });
+}
 
 recogniz = pics => {
   console.log('recogniz', pics)
@@ -81,14 +92,14 @@ recogniz = pics => {
         mostProbableUser.subject_id = image.subject_id;
       }
     }
-    if (mostProbableUser.confidence > 0.7 && mostProbableUser.subject_id) {
-      let { qty, productId, orderId } = this.state
-      console.log("current InStiore user",this.props.inStoreUsers );
-      console.log('currentUser', this.props.inStoreUsers[0].user.subject_id, 'propSubId', mostProbableUser.subject_id )
-    let currentUser = this.props.inStoreUsers.filter(customer => customer.user.subject_id ===  mostProbableUser.subject_id)
-      console.log('currentUserFilter', currentUser)
+    if (mostProbableUser.confidence > 0.5 && mostProbableUser.subject_id) {
+      let { qty, productId } = this.state
+      // console.log("current InStiore user",this.props.inStoreUsers );
+      // console.log('currentUser', this.props.inStoreUsers[0].user.subject_id, 'propSubId', mostProbableUser.subject_id )
+    // let currentUser = this.props.inStoreUsers.filter(customer => customer.user.subject_id ===  mostProbableUser.subject_id)
+      // console.log('currentUserFilter', currentUser)
     console.log('quantity check please', qty)
-    this.props.sendLineItemInfo(currentUser[0].order.id, productId, qty)
+    this.props.sendLineItemInfo(mostProbableUser.subject_id, qty, productId)
 
     } else if (removeErrArr.length > 0) {
       var utterance = new SpeechSynthesisUtterance(
@@ -141,8 +152,8 @@ const mapStateToProps = (state) => {
   }
 }
 const mapDispatchToProps = (dispatch) => ({
-    sendLineItemInfo(orderId, productId, qty) {
-      dispatch(updateLineItem(orderId, productId, qty));
+    sendLineItemInfo(subject_id, qty, productId) {
+      dispatch(updateLineItem(subject_id, qty, productId));
     },
     grabProduct(qty) {
       dispatch(updateShelf(qty))

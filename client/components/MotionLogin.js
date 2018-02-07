@@ -106,7 +106,7 @@ class MotionLogin extends React.Component {
       }
       // TERNARY LOGIC
 
-      if (mostProbableUser.confidence > 0.7 && mostProbableUser.subject_id) {
+      if (mostProbableUser.confidence > 0.5 && mostProbableUser.subject_id) {
         // if (this.state.productMode) {
         //   /*productmode need to write thunk*/
         // } else {
@@ -166,12 +166,6 @@ class MotionLogin extends React.Component {
             {this.state.camMode ? `WalkIn Mode` : `WalkOut Mode`}
           </button>
         )}
-        {/*<button onClick={this.handleClick}>
-        Mode:
-        {
-          this.state.camMode ? `WalkIn Mode` :`WalkOut Mode`
-        }
-      </button>*/}
         <SiteCamReact walkInKairos={this.updateFaceAuthImagesForLogin} />
       </div>
     );

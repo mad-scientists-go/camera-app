@@ -5,9 +5,6 @@ import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome } from './components'
 import ShelfCamera from './components/ShelfCamera'
-import {me} from './store'
-import Admin from './components/Admin';
-import AdminOrders from './components/AdminOrders';
 /**
  * COMPONENT
  */
