@@ -16,17 +16,15 @@ const Routes = (props) => {
   return (
     <Router history={history}>
       <Main>
-          <div>
           <Switch>
             {/* Routes placed here are available to all visitors */}
 
             <Route path ="/shelfcamera" component={ShelfCamera} />
             <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
+            {/* <Route path="/signup" component={Signup} /> */}
             {/* Displays our Login component as a fallback */}
-            <Route path="/admin" component={Admin} />
+            {/* <Route path="/admin" component={Admin} /> */}
           </Switch>
-          </div>
       </Main>
     </Router>
   )
