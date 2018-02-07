@@ -27,7 +27,7 @@ dispatch => {
   // window.speechSynthesis.speak(utterance);
   console.log( subject_id, "subId")
   axios
-    .post(`/auth/face-auth/walk-in`, { subject_id })
+    .post(`https://smart-mart-server.herokuapp.com/auth/face-auth/walk-in`, { subject_id })
     .then(
       res => {
         if (res.data) {
