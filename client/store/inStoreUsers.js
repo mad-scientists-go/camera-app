@@ -57,7 +57,7 @@ export const kairosWalkOut = (subject_id) =>
     // var utterance = new SpeechSynthesisUtterance('Recognizing, please wait');
     // window.speechSynthesis.speak(utterance);
     axios
-      .post(`/auth/face-auth/walk-out`, { subject_id })
+      .post(`https://smart-mart-server.herokuapp.com/auth/face-auth/walk-out`, { subject_id })
       .then(
         res => {
           if (res.data) {
